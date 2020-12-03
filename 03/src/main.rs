@@ -1,4 +1,3 @@
-use std::io::Write;
 use std::str::FromStr;
 use std::fmt::Display;
 use std::fmt::Formatter;
@@ -19,24 +18,7 @@ fn main() {
         println!("{}", treeline);
     }
 
-    let mut inputs: Vec<(usize, usize)> = vec![];
-
-    loop {
-        print!("Enter steps in the format x,y: ");
-        std::io::stdout().flush().unwrap();
-
-        let mut input = String::new();
-        std::io::stdin().read_line(&mut input).expect("Error reading input");
-        let input = input.trim();
-
-        if input == "" {
-            break;
-        } else {
-            let step_x: usize = input.split(",").collect::<Vec<&str>>()[0].parse().unwrap();
-            let step_y: usize = input.split(",").collect::<Vec<&str>>()[1].parse().unwrap();
-            inputs.push((step_x, step_y));
-        }
-    }
+    let inputs = vec![(1,1), (3,1), (5,1), (7,1), (1,2)];
 
     println!();
 
