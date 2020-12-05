@@ -21,11 +21,7 @@ fn main() {
 
     println!("Highest Seat ID: {}", &input.last().unwrap());
 
-    for (i, id) in input.iter().enumerate() {
-        if i == 0 {
-            continue;
-        };
-
+    for (i, id) in input.iter().enumerate().skip(1) {
         if *id != input[i - 1] + 1 {
             println!("Missing Seat at: {}", id - 1);
             break;
