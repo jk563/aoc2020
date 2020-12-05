@@ -9,8 +9,8 @@ fn main() {
     println!("Highest Seat ID: {}", &input.get(input.len()-1).unwrap().id);
     
     for (i, seat) in input.iter().enumerate() {
-        if (i == 0) { continue };
-        if (seat.id != &input[i-1].id + 1) { println!("Missing Seat at: {}", seat.id - 1);}
+        if i == 0 { continue };
+        if seat.id != &input[i-1].id + 1 { println!("Missing Seat at: {}", seat.id - 1);}
     }
 }
 
