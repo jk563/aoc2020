@@ -1,4 +1,3 @@
-use std::convert::TryInto;
 use std::str::FromStr;
 
 fn main() {
@@ -39,12 +38,9 @@ impl FromStr for Seat {
 struct SeatParseErr;
 
 fn to_int(s: &str) -> usize {
-    let mut number = 0;
-    for (position, bit) in s.chars().enumerate() {
-        number += match bit {
-            'B' | 'R' => 2_usize.pow((s.len() - (1 + position)).try_into().unwrap()),
-            _ => 0
-        }
-    }
-    number
+    usize::from_str_radix(&s.chars()
+                           .map(|x| if (x == 'B') || (x == 'R') {"1"} else {"0"} )
+                           .collect::<Vec<&str>>()
+                           .join(""),
+                          2).unwrap()
 }
