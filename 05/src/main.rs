@@ -16,6 +16,7 @@ fn main() {
             .unwrap()
         })
         .collect();
+
     input.sort();
 
     println!("Highest Seat ID: {}", &input.last().unwrap());
@@ -24,6 +25,7 @@ fn main() {
         if i == 0 {
             continue;
         };
+
         if *id != input[i - 1] + 1 {
             println!("Missing Seat at: {}", id - 1);
             break;
