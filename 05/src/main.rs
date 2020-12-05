@@ -21,8 +21,8 @@ fn main() {
 
     let highest = *input.last().unwrap();
     let lowest = *input.first().unwrap();
-    println!("Highest Seat ID: {}", highest);
 
+    println!("Highest Seat ID: {}", highest);
     println!(
         "Missing Seat at: {}",
         highest * (highest + 1) / 2 - input.iter().sum::<usize>() - ((1..lowest).sum::<usize>())
