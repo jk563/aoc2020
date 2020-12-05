@@ -23,7 +23,8 @@ fn main() {
     let lowest = *input.first().unwrap();
     println!("Highest Seat ID: {}", highest);
 
-    let missing_seat: usize =
-        highest * (highest + 1) / 2 - input.iter().sum::<usize>() - ((1..lowest).sum::<usize>());
-    println!("Missing Seat at: {}", missing_seat);
+    println!(
+        "Missing Seat at: {}",
+        highest * (highest + 1) / 2 - input.iter().sum::<usize>() - ((1..lowest).sum::<usize>())
+    );
 }
