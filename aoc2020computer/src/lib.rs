@@ -95,7 +95,7 @@ impl FromStr for Instruction {
 struct InstructionParseError;
 
 #[derive(Debug)]
-pub enum Operation {
+enum Operation {
     NOOP,
     ACC,
     JUMP,
@@ -115,4 +115,4 @@ impl FromStr for Operation {
 }
 
 #[derive(Debug)]
-pub struct OperationParseError;
+struct OperationParseError;
