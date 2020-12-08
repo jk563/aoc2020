@@ -1,5 +1,5 @@
-use std::str::FromStr;
 use std::collections::HashSet;
+use std::str::FromStr;
 
 #[derive(Debug)]
 pub struct Computer {
@@ -24,20 +24,26 @@ impl Computer {
     }
 
     pub fn load(&mut self, instructions: &Vec<&str>) {
-        self.program = instructions.iter().map( |x| x.parse().unwrap()).collect();
+        self.program = instructions.iter().map(|x| x.parse().unwrap()).collect();
+        self.accumulator = 0;
+        self.instruction_index = 0;
+        self.instructions_completed = HashSet::new();
     }
 
-    pub fn run(&mut self) {
+    pub fn run(&mut self) -> bool {
         loop {
             match self.program.get(self.instruction_index) {
                 Some(_) => {
-                    if self.instructions_completed.contains(&self.instruction_index) {
-                        break;
+                    if self
+                        .instructions_completed
+                        .contains(&self.instruction_index)
+                    {
+                        return false;
                     }
                     self.instructions_completed.insert(self.instruction_index);
                     self.execute();
-                },
-                None => break,
+                }
+                None => return true,
             }
         }
     }
@@ -48,11 +54,12 @@ impl Computer {
             Operation::NOOP => self.instruction_index += 1,
             Operation::ACC => {
                 self.accumulator += instruction.operand;
-                self.instruction_index +=1;
-            },
+                self.instruction_index += 1;
+            }
             Operation::JUMP => {
-                self.instruction_index = (self.instruction_index as isize + instruction.operand) as usize;
-            },
+                self.instruction_index =
+                    (self.instruction_index as isize + instruction.operand) as usize;
+            }
         }
     }
 }
@@ -60,7 +67,7 @@ impl Computer {
 #[derive(Debug)]
 struct Instruction {
     operation: Operation,
-    operand: isize
+    operand: isize,
 }
 
 impl FromStr for Instruction {
@@ -68,17 +75,19 @@ impl FromStr for Instruction {
 
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         let components: Vec<&str> = s.split(" ").collect();
-        if components.len() != 2 { return Err(InstructionParseError) }
+        if components.len() != 2 {
+            return Err(InstructionParseError);
+        }
         let operation = match components[0].parse() {
             Ok(operation) => operation,
-            Err(_) => return Err(InstructionParseError)
+            Err(_) => return Err(InstructionParseError),
         };
         let operand = match components[1].parse() {
             Ok(operand) => operand,
-            Err(_) => return Err(InstructionParseError)
+            Err(_) => return Err(InstructionParseError),
         };
 
-        Ok( Instruction { operation, operand } )
+        Ok(Instruction { operation, operand })
     }
 }
 
@@ -100,7 +109,7 @@ impl FromStr for Operation {
             "nop" => Ok(Operation::NOOP),
             "acc" => Ok(Operation::ACC),
             "jmp" => Ok(Operation::JUMP),
-            _ => Err(OperationParseError)
+            _ => Err(OperationParseError),
         }
     }
 }

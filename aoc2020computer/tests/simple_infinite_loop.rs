@@ -6,7 +6,8 @@ fn test_infinite_loop() {
     let instructions = vec!["nop +0", "acc +3", "jmp -1"];
     
     computer.load(&instructions);
-    computer.run();
+    let successful = computer.run();
 
     assert_eq!(computer.get_accumulator(), 3);
+    assert_eq!(successful, false);
 }
