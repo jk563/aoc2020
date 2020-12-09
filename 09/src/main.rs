@@ -31,14 +31,15 @@ fn main() {
 }
 
 fn valid(x: usize, previous: &[usize]) -> bool {
-    let mut low_to_high = previous.to_vec();
-    low_to_high.sort();
+    let mut previous = previous.to_vec();
+    previous.sort();
 
-    let mut larger_index = low_to_high.len() - 1;
+    let mut larger_index = previous.len() - 1;
 
-    for (smaller_index, small_number) in low_to_high.iter().enumerate() {
-        while small_number + low_to_high[larger_index] >= x {
-            if small_number + low_to_high[larger_index] == x {
+    for smaller_index in 0..larger_index {
+        let small_number = previous[smaller_index];
+        while small_number + previous[larger_index] >= x {
+            if small_number + previous[larger_index] == x {
                 return true;
             } else if larger_index == smaller_index + 1 {
                 return false;
