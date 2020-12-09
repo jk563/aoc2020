@@ -33,20 +33,18 @@ fn main() {
 fn valid(x: usize, previous: &[usize]) -> bool {
     let mut low_to_high = previous.to_vec();
     low_to_high.sort();
-    let mut high_to_low = low_to_high.clone();
-    high_to_low.reverse();
 
-    for small_number in &low_to_high {
-        for larger_number in &high_to_low {
-            if small_number + larger_number > x {
-                continue;
-            }
-            if small_number + larger_number == x {
+    let mut larger_index = low_to_high.len() - 1;
+
+    for (smaller_index, small_number) in low_to_high.iter().enumerate() {
+        while small_number + low_to_high[larger_index] >= x {
+            if small_number + low_to_high[larger_index] == x {
                 return true;
+            } else if larger_index == smaller_index + 1 {
+                return false;
             }
-            break;
+            larger_index -= 1;
         }
     }
-
     false
 }
